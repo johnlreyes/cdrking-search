@@ -1,0 +1,43 @@
+body {
+	font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+	color: #3E3E3E;
+	font-size: 12px;
+}
+
+p {
+	padding: 5px;
+}
+
+a {
+	color: #3687AF;
+}
+
+
+h2 {
+	border-bottom:2px solid #015287;
+	color: #D15600;
+	padding-top: 10px;
+  margin-top: 0;
+}
+
+table {
+	border-collapse:collapse;
+	font-size:12px;
+	margin:0 20px 20px 20px;
+	border-top:2px solid #015287;
+	width:480px;
+}
+
+th {
+	border-bottom: 2px solid #015287;
+	color: #D15600;
+	font-size: 14px;
+	font-weight: normal;
+	text-align: left;
+	padding: 3px 8px;
+	white-space: nowrap;
+}
+
+td {
+	padding: 6px;
+}

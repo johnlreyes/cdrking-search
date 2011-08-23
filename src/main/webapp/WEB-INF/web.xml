@@ -1,0 +1,45 @@
+<web-app>
+
+	<servlet>
+		<servlet-name>synchronize</servlet-name>
+		<servlet-class>per.search.web.json.Synchronize</servlet-class>
+	</servlet>
+    <servlet>
+		<servlet-name>synchronize_history</servlet-name>
+		<servlet-class>per.search.web.json.SynchronizeHistory</servlet-class>
+	</servlet>
+    <servlet>
+		<servlet-name>synchronize_status</servlet-name>
+		<servlet-class>per.search.web.json.SynchronizeStatus</servlet-class>
+	</servlet>
+    <servlet>
+		<servlet-name>synchronize_stop_ongoing</servlet-name>
+		<servlet-class>per.search.web.json.SynchronizeStopOngoing</servlet-class>
+	</servlet>
+    <servlet>
+		<servlet-name>products_all</servlet-name>
+		<servlet-class>per.search.web.json.ProductsAll</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>synchronize</servlet-name>
+		<url-pattern>/json/synchronize</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>synchronize_history</servlet-name>
+		<url-pattern>/json/synchronize_history</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>synchronize_status</servlet-name>
+		<url-pattern>/json/synchronize_status</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>synchronize_stop_ongoing</servlet-name>
+		<url-pattern>/json/synchronize_stop_ongoing</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>products_all</servlet-name>
+		<url-pattern>/json/products_all</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

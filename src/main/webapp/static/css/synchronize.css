@@ -1,0 +1,9 @@
+#status{
+	font-weight: bold;
+	font-color: red;
+}
+
+.date_width {
+    width: 200px;
+    white-space: nowrap;
+}
