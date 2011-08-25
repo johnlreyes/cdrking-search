@@ -1,17 +1,17 @@
 package per.search.persistence;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import lombok.extern.log4j.Log4j;
+
 import org.json.JSONObject;
-import per.search.model.History;
+
 import per.search.model.Product;
 import voldemort.client.ClientConfig;
 import voldemort.client.SocketStoreClientFactory;
 import voldemort.client.StoreClient;
 import voldemort.client.StoreClientFactory;
-import voldemort.versioning.Versioned;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Log4j
 public class ProductsDAO {
@@ -80,7 +80,7 @@ public class ProductsDAO {
         return returnValue;
     }
 
-    private static Product parseProduct(String json) {
+    public static Product parseProduct(String json) {
         Product product = null;
         try {
             product = new Product();

@@ -1,17 +1,17 @@
 package per.search.persistence;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import lombok.extern.log4j.Log4j;
+
 import org.json.JSONObject;
+
 import per.search.model.History;
 import voldemort.client.ClientConfig;
 import voldemort.client.SocketStoreClientFactory;
 import voldemort.client.StoreClient;
 import voldemort.client.StoreClientFactory;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @Log4j
 public class SynchronizeHistoryDAO {

@@ -1,36 +1,28 @@
 package per.search;
 
 
-import lombok.extern.log4j.Log4j;
-import org.json.JSONObject;
-import per.search.model.Information;
-import per.search.model.Product;
-import per.search.model.Status;
-import per.search.model.Support;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.*;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
 
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
+import lombok.extern.log4j.Log4j;
 
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
+
+import per.search.model.Information;
+import per.search.model.Product;
+import per.search.model.Support;
 
 @Log4j
 public class CdrKingJson {
@@ -98,6 +90,8 @@ public class CdrKingJson {
             returnValue.setPrice(value_price);
             returnValue.setStatus(value_status);
 
+            Information information = new Information();
+                        
             while (true) {
                 int title_index = 1;
                 String xpath_title = "//div[@id='product1']/table/tbody/tr["+title_index+"]/td[@class='product_label']/text()";
@@ -107,7 +101,6 @@ public class CdrKingJson {
                     break;
                 }
 
-                Information information = new Information();
                 Collection<String> iList = new ArrayList<String>();
                 information.put(value_title, iList);
 

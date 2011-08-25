@@ -20,6 +20,14 @@
 		<servlet-name>products_all</servlet-name>
 		<servlet-class>per.search.web.json.ProductsAll</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>index_all</servlet-name>
+		<servlet-class>per.search.web.json.IndexAll</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>search_key</servlet-name>
+		<servlet-class>per.search.web.json.SearchKey</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>synchronize</servlet-name>
@@ -40,6 +48,14 @@
     <servlet-mapping>
 		<servlet-name>products_all</servlet-name>
 		<url-pattern>/json/products_all</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>index_all</servlet-name>
+		<url-pattern>/json/index_all</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>search_key</servlet-name>
+		<url-pattern>/json/search_key</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

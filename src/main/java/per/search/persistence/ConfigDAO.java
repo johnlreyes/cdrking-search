@@ -7,41 +7,43 @@ import voldemort.client.StoreClientFactory;
 
 public class ConfigDAO {
 
-    private static StoreClient<String, String> client = null;
+	private static StoreClient<String, String> client = null;
 
-    static {
-        try {
-            System.err.println("Connecting to Server");
-            client = getVoldemortClient();
-            System.err.println("Client connected to Server");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+	static {
+		try {
+			System.err.println("Connecting to Server");
+			client = getVoldemortClient();
+			System.err.println("Client connected to Server");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
-    private static StoreClient<String, String> getVoldemortClient() throws Exception {
-        String bootstrapUrl = "tcp://localhost:6666";
-        StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootstrapUrl));
-        return factory.getStoreClient("config");
-    }
+	private static StoreClient<String, String> getVoldemortClient()
+			throws Exception {
+		String bootstrapUrl = "tcp://localhost:6666";
+		StoreClientFactory factory = new SocketStoreClientFactory(
+				new ClientConfig().setBootstrapUrls(bootstrapUrl));
+		return factory.getStoreClient("config");
+	}
 
-    public static boolean put(String key, String value) {
-        try {
-            client.put(key, value);
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
+	public static boolean put(String key, String value) {
+		try {
+			client.put(key, value);
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
 
-    public static String get(String key) {
-        String returnValue = null;
-        try {
-            returnValue = (String) client.getValue(key);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return returnValue;
-    }
+	public static String get(String key) {
+		String returnValue = null;
+		try {
+			returnValue = (String) client.getValue(key);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return returnValue;
+	}
 }
