@@ -6,10 +6,10 @@ public
 @Data
 class Product {
 
+	private int sid;
+	private String name;
     private String code;
-    private int sid;
     private String category;
-    private String name;
     private String price;
     private String status;
     private Information information;

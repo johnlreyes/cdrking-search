@@ -2,31 +2,31 @@
 
 	<servlet>
 		<servlet-name>synchronize</servlet-name>
-		<servlet-class>per.search.web.json.Synchronize</servlet-class>
+		<servlet-class>per.search.json.web.Synchronize</servlet-class>
 	</servlet>
     <servlet>
 		<servlet-name>synchronize_history</servlet-name>
-		<servlet-class>per.search.web.json.SynchronizeHistory</servlet-class>
+		<servlet-class>per.search.json.web.SynchronizeHistory</servlet-class>
 	</servlet>
     <servlet>
 		<servlet-name>synchronize_status</servlet-name>
-		<servlet-class>per.search.web.json.SynchronizeStatus</servlet-class>
+		<servlet-class>per.search.json.web.SynchronizeStatus</servlet-class>
 	</servlet>
     <servlet>
 		<servlet-name>synchronize_stop_ongoing</servlet-name>
-		<servlet-class>per.search.web.json.SynchronizeStopOngoing</servlet-class>
+		<servlet-class>per.search.json.web.SynchronizeStopOngoing</servlet-class>
 	</servlet>
     <servlet>
 		<servlet-name>products_all</servlet-name>
-		<servlet-class>per.search.web.json.ProductsAll</servlet-class>
+		<servlet-class>per.search.json.web.ProductsAll</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>index_all</servlet-name>
-		<servlet-class>per.search.web.json.IndexAll</servlet-class>
+		<servlet-class>per.search.json.web.IndexAll</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>search_key</servlet-name>
-		<servlet-class>per.search.web.json.SearchKey</servlet-class>
+		<servlet-class>per.search.json.web.SearchKey</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

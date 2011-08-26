@@ -2,12 +2,14 @@ package per.search.thread;
 
 import java.io.File;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 
 import per.search.model.Product;
 import per.search.persistence.ProductsDAO;
@@ -21,14 +23,10 @@ public class IndexThread  implements Runnable {
 			long start = System.currentTimeMillis();
 			
 			try {
-				File file = new File("lucene_index");
-				if (!(file.exists() && file.isDirectory())) {
-					file.mkdir();
-				}
-				
-				Directory index = FSDirectory.getDirectory("lucene_index");
-		        StandardAnalyzer analyzer = new StandardAnalyzer();
-		        w = new IndexWriter(index, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+				String index_folder = "lucene_index";
+				Directory indexDir = FSDirectory.open(new File(index_folder));
+				Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_33);
+		        w = new IndexWriter(indexDir, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
 				
 		        int count = 0;
 		        int id = 14;
@@ -36,17 +34,19 @@ public class IndexThread  implements Runnable {
 		        
 		        while (data != null || (data==null&&count < 10)) {
 		        	if (data != null) {
-		        		System.out.println("indexing " + id);
 		        		Product product = ProductsDAO.parseProduct(data);
 			            Document doc = new Document();
 			            
 			            String name = product.getName();
-			            System.out.println("name=" + name);
 			            String code = product.getCode();
-			            System.out.println("code=" + code);
 			            String category = product.getCategory();
-			            System.out.println("category=" + category);
-						
+			            
+			            System.out.println("sid=" + product.getSid());
+			            System.out.println("   name=" + name);
+			            System.out.println("   code=" + code);
+			            System.out.println("   category=" + category);
+			            
+			            doc.add(new Field("sid", ""+product.getSid(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 			            if (name != null && name.trim().length() > 0) {
 			            	doc.add(new Field("name"	, name		, Field.Store.YES, Field.Index.ANALYZED));
 			            }

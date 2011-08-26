@@ -1,7 +1,6 @@
-package per.search.web.json;
+package per.search.json.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -9,25 +8,20 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
-
+import per.search.json.util.JSON_UTIL;
 import per.search.thread.CdrKingSyncThread;
 
-public class Synchronize extends HttpServlet {
+public class Synchronize extends AbstractJsonServlet {
 
 	private static final long serialVersionUID = 6787632235482556751L;
 
-	public void doGet(final HttpServletRequest request,
-			final HttpServletResponse response) throws ServletException,
-			IOException {
+	public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
 		if (!CdrKingSyncThread.invoked) {
-			ScheduledExecutorService oneTime = Executors
-					.newScheduledThreadPool(1);
+			ScheduledExecutorService oneTime = Executors.newScheduledThreadPool(1);
 			oneTime.schedule(new CdrKingSyncThread(), 1, TimeUnit.SECONDS);
 		}
 
@@ -36,11 +30,7 @@ public class Synchronize extends HttpServlet {
 		}
 		statusMap.put("status", CdrKingSyncThread.status);
 
-		JSONObject jsonObject = new JSONObject(statusMap);
-
-		response.setContentType("application/json");
-		PrintWriter out = response.getWriter();
-		out.print(jsonObject);
-		out.flush();
+		String output = JSON_UTIL.convert(statusMap);
+		jsonOutput(response, output);
 	}
 }

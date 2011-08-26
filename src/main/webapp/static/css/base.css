@@ -40,4 +40,5 @@ th {
 
 td {
 	padding: 6px;
+	white-space: nowrap;
 }
