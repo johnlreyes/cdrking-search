@@ -26,7 +26,12 @@ public class SearchProductSimple implements SearchProduct {
 	@Override
 	public List<Product> search(String input) {
 		List<Product> productHits = new ArrayList<Product>();
-		if (input != null) {
+		if (input != null && input.trim().length()>0) {
+			String[] arr = input.split("\\s+");
+			StringBuilder targetKey = new StringBuilder();
+			for (String a : arr) {
+				targetKey.append(a+"* ");
+			}
 			try {
 				Directory indexDir = FSDirectory.open(new File("lucene_index"));
 				IndexSearcher searcher = new IndexSearcher(indexDir);
@@ -34,7 +39,7 @@ public class SearchProductSimple implements SearchProduct {
 				StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_33);
 
 				QueryParser queryParser = new MultiFieldQueryParser(Version.LUCENE_33, new String[] { "name", "code", "category" }, analyzer);
-				Query query = queryParser.parse(input + "*");
+				Query query = queryParser.parse(targetKey.toString());
 
 				Sort sort = new Sort(new SortField("sid", SortField.STRING, true));
 				TopDocs hits = searcher.search(query, 10, sort);

@@ -2,14 +2,9 @@
 var SYNCHRONIZE = {
 
     load: function() {
-        console.log('load');
          $('#results').hide();
     },
-    display: function(image_url) {
-        console.log('display');
-    },
     ajax_synchronize: function() {
-        console.log('ajax_synchronize');
         $.ajax({
             type: "GET",
             url: "/json/synchronize",
@@ -23,16 +18,13 @@ var SYNCHRONIZE = {
                 setTimeout(function() {
                 $('#status').slideUp('slow');
                 }, 3000);
-
             }
         });
     },
     ajax_history: function() {
-        console.group('ajax_history');
         $.getJSON(
             "/json/synchronize_history",
             function(data) {
-                console.group('getJSON');
                 $("#history_table_body").children().remove();
                 $.each(data, function(index, array) {
                     var tr_content = '<tr>';
@@ -45,7 +37,6 @@ var SYNCHRONIZE = {
                     tr_content += '</tr>';
                     $(tr_content).appendTo('#history_table_body');
                 });
-                console.groupEnd();
             }
         )
         .error(function() {
@@ -53,27 +44,22 @@ var SYNCHRONIZE = {
                  $('#results').hide();
             })
         .success(function(jsonArr) {
-                console.group('success');
                 $('#status').text('History invoked!');
 
             })
         .complete(function() {
-                console.group('complete');
                 setTimeout(function() {
                         $('#status').slideUp('slow');
                     },
                     3000
                 );
                 $('#results').show();
-                console.groupEnd();
             });
-        console.groupEnd();
     },
     ajax_stop_ongoing: function() {
         $.getJSON(
             "/json/synchronize_stop_ongoing",
             function(data) {
-               console.log('data='+data);
             }
         );
     }

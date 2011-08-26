@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.json.JSONObject;
 
-import per.search.CdrKingJson;
+import per.search.Scrapper;
 import per.search.model.History;
 import per.search.persistence.ConfigDAO;
 import per.search.persistence.ProductsDAO;
@@ -39,62 +39,60 @@ public class CdrKingSyncThread implements Runnable {
 
 	@Override
 	public void run() {
-		synchronized (this) {
-			invoked = true;
-			stopOngoing = false;
-			history.setStartDate(System.currentTimeMillis());
-			status = "invoked";
+		invoked = true;
+		stopOngoing = false;
+		history.setStartDate(System.currentTimeMillis());
+		status = "invoked";
 
-			try {
-				String str = ConfigDAO.get("last_history_id");
-				if (str != null) {
-					historyId = Integer.valueOf(str);
-				}
-				historyId++;
-			} catch (Throwable ex) {
-				log.error(ex);
-				historyId = -1;
-				cleanUp();
-				hasEnded = true;
-
-				return;
+		try {
+			String str = ConfigDAO.get("last_history_id");
+			if (str != null) {
+				historyId = Integer.valueOf(str);
 			}
-			history.setId(historyId);
-
-			try {
-				String str = ConfigDAO.get("last_sid");
-				if (str != null) {
-					lastSid = Integer.valueOf(str);
-				}
-				lastSid++;
-			} catch (Throwable ex) {
-				log.error(ex);
-				lastSid = -1;
-				cleanUp();
-				hasEnded = true;
-
-				return;
-			}
-			history.setStartSid(lastSid);
-			log.info("Start SID : " + lastSid);
-			hasStarted = true;
-
-			String product = CdrKingJson.toString(lastSid);
-			while (product != null) {
-				boolean putStatus = ProductsDAO.put("" + lastSid, product);
-				log.info("putStatus - products " + putStatus);
-				log.info("added " + product);
-				if (stopOngoing) {
-					break;
-				}
-				updateTracking();
-				lastSid++;
-				product = CdrKingJson.toString(lastSid);
-			}
-
+			historyId++;
+		} catch (Throwable ex) {
+			log.error(ex);
+			historyId = -1;
 			cleanUp();
 			hasEnded = true;
+
+			return;
 		}
+		history.setId(historyId);
+
+		try {
+			String str = ConfigDAO.get("last_sid");
+			if (str != null) {
+				lastSid = Integer.valueOf(str);
+			}
+			lastSid++;
+		} catch (Throwable ex) {
+			log.error(ex);
+			lastSid = -1;
+			cleanUp();
+			hasEnded = true;
+
+			return;
+		}
+		history.setStartSid(lastSid);
+		log.info("Start SID : " + lastSid);
+		hasStarted = true;
+
+		String product = Scrapper.toString(lastSid);
+		while (product != null) {
+			boolean putStatus = ProductsDAO.put("" + lastSid, product);
+			log.info("putStatus - products " + putStatus);
+			log.info("added " + product);
+			if (stopOngoing) {
+				break;
+			}
+			updateTracking();
+			lastSid++;
+			product = Scrapper.toString(lastSid);
+		}
+
+		cleanUp();
+		hasEnded = true;
 	}
 
 	private void cleanUp() {
@@ -112,8 +110,7 @@ public class CdrKingSyncThread implements Runnable {
 		}
 		history.setEndSid(lastSid);
 		history.setEndDate(System.currentTimeMillis());
-		SynchronizeHistoryDAO.put("" + history.getId(),
-				new JSONObject(history).toString());
+		SynchronizeHistoryDAO.put("" + history.getId(), new JSONObject(history).toString());
 		ConfigDAO.put("last_sid", "" + lastSid);
 	}
 }

@@ -2,6 +2,8 @@ package per.search.thread;
 
 import java.io.File;
 
+import lombok.extern.log4j.Log4j;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -14,6 +16,7 @@ import org.apache.lucene.util.Version;
 import per.search.model.Product;
 import per.search.persistence.ProductsDAO;
 
+@Log4j
 public class IndexThread  implements Runnable {
 
 	@Override
@@ -21,6 +24,7 @@ public class IndexThread  implements Runnable {
 		IndexWriter w = null;
 		synchronized (this) {
 			long start = System.currentTimeMillis();
+			int processed = 0;
 			
 			try {
 				String index_folder = "lucene_index";
@@ -41,10 +45,10 @@ public class IndexThread  implements Runnable {
 			            String code = product.getCode();
 			            String category = product.getCategory();
 			            
-			            System.out.println("sid=" + product.getSid());
-			            System.out.println("   name=" + name);
-			            System.out.println("   code=" + code);
-			            System.out.println("   category=" + category);
+			            log.info("sid=" + product.getSid());
+			            log.info("   name=" + name);
+			            log.info("   code=" + code);
+			            log.info("   category=" + category);
 			            
 			            doc.add(new Field("sid", ""+product.getSid(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 			            if (name != null && name.trim().length() > 0) {
@@ -58,6 +62,7 @@ public class IndexThread  implements Runnable {
 			            }
 			            
 			            w.addDocument(doc);
+			            processed ++;
 			            count = 0;
 		        	} else {
 		        	    count++;
@@ -76,7 +81,7 @@ public class IndexThread  implements Runnable {
 	        
 		    long end = System.currentTimeMillis();
 
-		    System.out.println("took " + (end - start) + " milliseconds");
+		    log.info("  processed "+processed+"  took " + (end - start) + " milliseconds");
 		}
 	}
 	

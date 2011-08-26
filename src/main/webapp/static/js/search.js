@@ -1,5 +1,5 @@
 
-var LUCENE = {
+var SEARCH = {
 
     load: function() {
         $('#results').hide();
@@ -35,6 +35,7 @@ var LUCENE = {
                     tr_content += '<td>'+array['sid']+'</td>';
                     tr_content += '<td>'+array['code']+'</td>';
                     tr_content += '<td>'+array['name']+'</td>';
+                    tr_content += '<td>'+array['category']+'</td>';
                     tr_content += '<td>'+array['price']+'</td>';
                     tr_content += '<td>'+array['status']+'</td>';
                     tr_content += '</tr>';
@@ -47,11 +48,11 @@ var LUCENE = {
                 $('#results').hide();
             })
         .success(function(jsonArr) {
-                $('#status').text('Search Key invoked!');
+                //$('#status').text('Search Key invoked!');
 			})
         .complete(function() {
                 setTimeout(function() {
-                        $('#status').slideUp('slow');
+                        //$('#status').slideUp('slow');
                     },
                     3000
                 );
@@ -61,12 +62,15 @@ var LUCENE = {
 }
 
 $(document).ready(function(){
-    LUCENE.load();
+    SEARCH.load();
 
     $('#index_all').click(function(){
-        LUCENE.ajax_index_all();
+        SEARCH.ajax_index_all();
     });
+    $('#key').keyup(function() {
+	  	SEARCH.ajax_search_key();
+	});
     $('#search_key').click(function(){
-        LUCENE.ajax_search_key();
+        SEARCH.ajax_search_key();
     });
 });

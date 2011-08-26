@@ -19,11 +19,9 @@ public class ConfigDAO {
 		}
 	}
 
-	private static StoreClient<String, String> getVoldemortClient()
-			throws Exception {
+	private static StoreClient<String, String> getVoldemortClient() throws Exception {
 		String bootstrapUrl = "tcp://localhost:6666";
-		StoreClientFactory factory = new SocketStoreClientFactory(
-				new ClientConfig().setBootstrapUrls(bootstrapUrl));
+		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootstrapUrl));
 		return factory.getStoreClient("config");
 	}
 
