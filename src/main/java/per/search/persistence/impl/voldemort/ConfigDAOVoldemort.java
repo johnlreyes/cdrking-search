@@ -10,25 +10,14 @@ public class ConfigDAOVoldemort implements ConfigDAO {
 
 	private static StoreClient<String, String> client = null;
 
-	static {
-		try {
-			System.err.println("Connecting to Server");
-			client = getVoldemortClient();
-			System.err.println("Client connected to Server");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	private static StoreClient<String, String> getVoldemortClient() throws Exception {
-		String bootstrapUrl = "tcp://localhost:6666";
-		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootstrapUrl));
-		return factory.getStoreClient("config");
-	}
+	private String bootStrapUrl;
 
 	@Override
 	public boolean put(String key, String value) {
 		try {
+			if (client == null) {
+				client = getVoldemortClient();
+			}
 			client.put(key, value);
 			return true;
 		} catch (Exception ex) {
@@ -41,10 +30,22 @@ public class ConfigDAOVoldemort implements ConfigDAO {
 	public String get(String key) {
 		String returnValue = null;
 		try {
+			if (client == null) {
+				client = getVoldemortClient();
+			}
 			returnValue = (String) client.getValue(key);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return returnValue;
+	}
+
+	public void setBootStrapUrl(String bootStrapUrl) {
+		this.bootStrapUrl = bootStrapUrl;
+	}
+
+	private StoreClient<String, String> getVoldemortClient() throws Exception {
+		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootStrapUrl));
+		return factory.getStoreClient("config");
 	}
 }

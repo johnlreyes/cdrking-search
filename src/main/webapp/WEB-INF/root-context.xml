@@ -12,13 +12,20 @@
 	
 	<context:component-scan base-package="per.search" />
 	
+	<bean	id="voldemortParent" abstract="true">
+		<property name="bootStrapUrl" value="tcp://localhost:6666" />
+	</bean>
+	
 	<bean 	id="configDAO"
-			class="per.search.persistence.impl.voldemort.ConfigDAOVoldemort" />
+			class="per.search.persistence.impl.voldemort.ConfigDAOVoldemort"
+			parent="voldemortParent" />
 	
 	<bean 	id="productsDAO"
-			class="per.search.persistence.impl.voldemort.ProductsDAOVoldemort" />
+			class="per.search.persistence.impl.voldemort.ProductsDAOVoldemort" 
+			parent="voldemortParent" />
 	
 	<bean 	id="synchronizeHistoryDAO"
-			class="per.search.persistence.impl.voldemort.SynchronizeHistoryDAOVoldemort" />
+			class="per.search.persistence.impl.voldemort.SynchronizeHistoryDAOVoldemort" 
+			parent="voldemortParent" />
 		
 </beans>

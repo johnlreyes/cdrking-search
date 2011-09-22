@@ -16,26 +16,15 @@ public class SynchronizeHistoryDAOVoldemort implements SynchronizeHistoryDAO {
 
 	private static StoreClient<String, String> client = null;
 
-	static {
-		try {
-			System.err.println("Connecting to Server");
-			client = getVoldemortClient();
-			System.err.println("Client connected to Server");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	private static StoreClient<String, String> getVoldemortClient() throws Exception {
-		String bootstrapUrl = "tcp://localhost:6666";
-		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootstrapUrl));
-		return factory.getStoreClient("synchronize_history");
-	}
+	private String bootStrapUrl;
 
 	@Override
 	public boolean put(String key, History history) {
 		try {
 			log.info("<<<put>>> key=" + key + "  value=" + history);
+			if (client == null) {
+				client = getVoldemortClient();
+			}
 			client.put(key, history.toJSON());
 			return true;
 		} catch (Exception ex) {
@@ -48,6 +37,9 @@ public class SynchronizeHistoryDAOVoldemort implements SynchronizeHistoryDAO {
 	public History get(String key) {
 		History returnValue = null;
 		try {
+			if (client == null) {
+				client = getVoldemortClient();
+			}
 			returnValue = History.toObject(client.getValue(key));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -60,6 +52,12 @@ public class SynchronizeHistoryDAOVoldemort implements SynchronizeHistoryDAO {
 		log.info("getAll");
 		Collection<History> returnValue = new ArrayList<History>();
 		int index = 1;
+		try {
+			if (client == null) {
+				client = getVoldemortClient();
+			}
+		} catch (Exception dontCare) {
+		}
 		String data = client.getValue("" + index);
 		log.info("index=" + index + " data=" + data);
 		while (data != null) {
@@ -74,5 +72,14 @@ public class SynchronizeHistoryDAOVoldemort implements SynchronizeHistoryDAO {
 			log.info("index=" + index + " data=" + data);
 		}
 		return returnValue;
+	}
+
+	public void setBootStrapUrl(String bootStrapUrl) {
+		this.bootStrapUrl = bootStrapUrl;
+	}
+
+	private StoreClient<String, String> getVoldemortClient() throws Exception {
+		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootStrapUrl));
+		return factory.getStoreClient("synchronize_history");
 	}
 }

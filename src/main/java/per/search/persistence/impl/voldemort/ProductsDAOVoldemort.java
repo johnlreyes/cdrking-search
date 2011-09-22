@@ -16,25 +16,14 @@ public class ProductsDAOVoldemort implements ProductsDAO {
 
 	private static StoreClient<String, String> client = null;
 
-	static {
-		try {
-			System.err.println("Connecting to Server");
-			client = getVoldemortClient();
-			System.err.println("Client connected to Server");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	private static StoreClient<String, String> getVoldemortClient() throws Exception {
-		String bootstrapUrl = "tcp://localhost:6666";
-		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootstrapUrl));
-		return factory.getStoreClient("products");
-	}
-
+	private String bootStrapUrl;
+	
 	@Override
 	public boolean put(String key, Product product) {
 		try {
+			if (client == null) {
+				client = getVoldemortClient();
+			}
 			client.put(key, product.toJSON());
 			return true;
 		} catch (Exception ex) {
@@ -47,6 +36,9 @@ public class ProductsDAOVoldemort implements ProductsDAO {
 	public Product get(String key) {
 		Product returnValue = null;
 		try {
+			if (client == null) {
+				client = getVoldemortClient();
+			}
 			returnValue = Product.toObject(client.getValue(key));
 		} catch (Exception dontCare) {
 		}
@@ -59,6 +51,12 @@ public class ProductsDAOVoldemort implements ProductsDAO {
 		Collection<Product> returnValue = new ArrayList<Product>();
 		int count = 0;
 		int index = 14;
+		try {
+			if (client == null) {
+				client = getVoldemortClient();
+			}
+		} catch (Exception dontCare) {			
+		}
 		String data = client.getValue("" + index);
 		log.info("index=" + index + " count=" + count + "  data=" + data);
 		while (data != null || (data == null && count < 10)) {
@@ -80,4 +78,12 @@ public class ProductsDAOVoldemort implements ProductsDAO {
 		return returnValue;
 	}
 
+	public void setBootStrapUrl(String bootStrapUrl) {
+		this.bootStrapUrl = bootStrapUrl;
+	}
+
+	private StoreClient<String, String> getVoldemortClient() throws Exception {
+		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootStrapUrl));
+		return factory.getStoreClient("products");
+	}	
 }
