@@ -4,27 +4,28 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import lombok.extern.log4j.Log4j;
-import per.search.model.Product;
-import per.search.persistence.ProductsDAO;
+import per.search.model.History;
+import per.search.persistence.SynchronizeHistoryDAO;
 import voldemort.client.ClientConfig;
 import voldemort.client.SocketStoreClientFactory;
 import voldemort.client.StoreClient;
 import voldemort.client.StoreClientFactory;
 
 @Log4j
-public class ProductsDAOVoldemort implements ProductsDAO {
+public class SynchronizeHistoryDAOImpl implements SynchronizeHistoryDAO {
 
 	private static StoreClient<String, String> client = null;
 
 	private String bootStrapUrl;
-	
+
 	@Override
-	public boolean put(String key, Product product) {
+	public boolean put(String key, History history) {
 		try {
+			log.info("<<<put>>> key=" + key + "  value=" + history);
 			if (client == null) {
 				client = getVoldemortClient();
 			}
-			client.put(key, product.toJSON());
+			client.put(key, history.toJSON());
 			return true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -33,47 +34,42 @@ public class ProductsDAOVoldemort implements ProductsDAO {
 	}
 
 	@Override
-	public Product get(String key) {
-		Product returnValue = null;
+	public History get(String key) {
+		History returnValue = null;
 		try {
 			if (client == null) {
 				client = getVoldemortClient();
 			}
-			returnValue = Product.toObject(client.getValue(key));
-		} catch (Exception dontCare) {
+			returnValue = History.toObject(client.getValue(key));
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return returnValue;
 	}
 
 	@Override
-	public Collection<Product> getAll() {
+	public Collection<History> getAll() {
 		log.info("getAll");
-		Collection<Product> returnValue = new ArrayList<Product>();
-		int count = 0;
-		int index = 14;
+		Collection<History> returnValue = new ArrayList<History>();
+		int index = 1;
 		try {
 			if (client == null) {
 				client = getVoldemortClient();
 			}
-		} catch (Exception dontCare) {			
+		} catch (Exception dontCare) {
 		}
 		String data = client.getValue("" + index);
-		log.info("index=" + index + " count=" + count + "  data=" + data);
-		while (data != null || (data == null && count < 10)) {
-			if (data != null) {
-				Product product = Product.toObject(data);
-				if (product != null) {
-					returnValue.add(product);
-				}
+		log.info("index=" + index + " data=" + data);
+		while (data != null) {
+			History history = History.toObject(data);
+			log.info("index=" + index + " history=" + history);
+			if (history != null) {
+				System.err.println("[" + index + "] history=" + history);
+				returnValue.add(history);
 			}
 			index++;
-			if (data == null) {
-				count++;
-			} else {
-				count = 0;
-			}
 			data = client.getValue("" + index);
-			log.info("index=" + index + " count=" + count + "  data=" + data);
+			log.info("index=" + index + " data=" + data);
 		}
 		return returnValue;
 	}
@@ -84,6 +80,6 @@ public class ProductsDAOVoldemort implements ProductsDAO {
 
 	private StoreClient<String, String> getVoldemortClient() throws Exception {
 		StoreClientFactory factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(bootStrapUrl));
-		return factory.getStoreClient("products");
-	}	
+		return factory.getStoreClient("synchronize_history");
+	}
 }

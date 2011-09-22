@@ -1,5 +1,6 @@
 package per.search.model;
 
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -8,8 +9,10 @@ import lombok.Data;
 import org.codehaus.jackson.map.ObjectMapper;
 
 @Data
-public class Product {
+public class Product implements Serializable {
 
+	private static final long serialVersionUID = 6334625128087459732L;
+	
 	private int sid;
 	private String name;
 	private String code;

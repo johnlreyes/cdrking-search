@@ -1,5 +1,6 @@
 package per.search.model;
 
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -8,8 +9,10 @@ import lombok.Data;
 import org.codehaus.jackson.map.ObjectMapper;
 
 @Data
-public class History {
+public class History implements Serializable {
 
+	private static final long serialVersionUID = 862209497482231332L;
+	
 	private int Id;
 	private long startDate;
 	private int startSid;

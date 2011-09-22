@@ -6,7 +6,7 @@ import voldemort.client.SocketStoreClientFactory;
 import voldemort.client.StoreClient;
 import voldemort.client.StoreClientFactory;
 
-public class ConfigDAOVoldemort implements ConfigDAO {
+public class ConfigDAOImpl implements ConfigDAO {
 
 	private static StoreClient<String, String> client = null;
 

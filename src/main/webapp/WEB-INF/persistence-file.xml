@@ -8,12 +8,13 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean 	id="configDAO"
+			class="per.search.persistence.impl.file.ConfigDAOImpl" />
 	
-	<context:component-scan base-package="per.search" />
+	<bean 	id="productsDAO"
+			class="per.search.persistence.impl.file.ProductsDAOImpl" />
 	
-	
-	<!-- <import resource="persistence-voldemort.xml"/> -->
-	<import resource="persistence-file.xml"/>
+	<bean 	id="synchronizeHistoryDAO"
+			class="per.search.persistence.impl.file.SynchronizeHistoryDAOImpl" />
 		
 </beans>
