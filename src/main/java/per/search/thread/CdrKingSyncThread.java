@@ -2,16 +2,28 @@ package per.search.thread;
 
 import lombok.extern.log4j.Log4j;
 
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import per.search.Scrapper;
 import per.search.model.History;
+import per.search.model.Product;
 import per.search.persistence.ConfigDAO;
 import per.search.persistence.ProductsDAO;
 import per.search.persistence.SynchronizeHistoryDAO;
+import per.search.source.http.Scrapper;
 
 @Log4j
+@Component
 public class CdrKingSyncThread implements Runnable {
+
+	@Autowired
+	private ConfigDAO configDAO;
+
+	@Autowired
+	private ProductsDAO productsDAO;
+
+	@Autowired
+	private SynchronizeHistoryDAO synchronizeHistoryDAO;
 
 	public static String status = "standby";
 	public static boolean invoked = false;
@@ -45,7 +57,7 @@ public class CdrKingSyncThread implements Runnable {
 		status = "invoked";
 
 		try {
-			String str = ConfigDAO.get("last_history_id");
+			String str = configDAO.get("last_history_id");
 			if (str != null) {
 				historyId = Integer.valueOf(str);
 			}
@@ -61,7 +73,7 @@ public class CdrKingSyncThread implements Runnable {
 		history.setId(historyId);
 
 		try {
-			String str = ConfigDAO.get("last_sid");
+			String str = configDAO.get("last_sid");
 			if (str != null) {
 				lastSid = Integer.valueOf(str);
 			}
@@ -78,9 +90,9 @@ public class CdrKingSyncThread implements Runnable {
 		log.info("Start SID : " + lastSid);
 		hasStarted = true;
 
-		String product = Scrapper.toString(lastSid);
+		Product product = Product.toObject(Scrapper.toString(lastSid));
 		while (product != null) {
-			boolean putStatus = ProductsDAO.put("" + lastSid, product);
+			boolean putStatus = productsDAO.put("" + lastSid, product);
 			log.info("putStatus - products " + putStatus);
 			log.info("added " + product);
 			if (stopOngoing) {
@@ -88,7 +100,7 @@ public class CdrKingSyncThread implements Runnable {
 			}
 			updateTracking();
 			lastSid++;
-			product = Scrapper.toString(lastSid);
+			product = Product.toObject(Scrapper.toString(lastSid));
 		}
 
 		cleanUp();
@@ -104,13 +116,13 @@ public class CdrKingSyncThread implements Runnable {
 
 	private void updateTracking() {
 		log.info("updateTracking");
-		ConfigDAO.put("last_history_id", "" + history.getId());
+		configDAO.put("last_history_id", "" + history.getId());
 		if (lastSid < 0) {
 			lastSid = history.getStartSid();
 		}
 		history.setEndSid(lastSid);
 		history.setEndDate(System.currentTimeMillis());
-		SynchronizeHistoryDAO.put("" + history.getId(), new JSONObject(history).toString());
-		ConfigDAO.put("last_sid", "" + lastSid);
+		synchronizeHistoryDAO.put("" + history.getId(), history);
+		configDAO.put("last_sid", "" + lastSid);
 	}
 }

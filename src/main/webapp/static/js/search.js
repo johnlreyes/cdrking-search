@@ -8,7 +8,7 @@ var SEARCH = {
     ajax_index_all: function() {
         $.ajax({
             type: "GET",
-            url: "/json/index_all",
+            url: "/index/all",
             error: function() {
                 $('#status').text('Index All failed. Try again.').slideDown('slow');
             },
@@ -27,7 +27,7 @@ var SEARCH = {
     ajax_search_key: function() {
         var key = $('#key').val();
         $.getJSON(
-            "/json/search_key?key="+key,
+            "/search/byKey?key="+key,
             function(data) {
             	$("#products_summary_table_body").children().remove();
                 $.each(data, function(index, array) {

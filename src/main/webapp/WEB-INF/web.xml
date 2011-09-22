@@ -1,71 +1,29 @@
 <web-app>
-
-	<servlet>
-		<servlet-name>controller</servlet-name>
-		<servlet-class>per.search.json.web.Controller</servlet-class>
-	</servlet>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/root-context.xml</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	
 	<servlet>
-		<servlet-name>synchronize</servlet-name>
-		<servlet-class>per.search.json.web.Synchronize</servlet-class>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
+		</init-param>
 	</servlet>
-    <servlet>
-		<servlet-name>synchronize_history</servlet-name>
-		<servlet-class>per.search.json.web.SynchronizeHistory</servlet-class>
-	</servlet>
-    <servlet>
-		<servlet-name>synchronize_status</servlet-name>
-		<servlet-class>per.search.json.web.SynchronizeStatus</servlet-class>
-	</servlet>
-    <servlet>
-		<servlet-name>synchronize_stop_ongoing</servlet-name>
-		<servlet-class>per.search.json.web.SynchronizeStopOngoing</servlet-class>
-	</servlet>
-    <servlet>
-		<servlet-name>products_all</servlet-name>
-		<servlet-class>per.search.json.web.ProductsAll</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>index_all</servlet-name>
-		<servlet-class>per.search.json.web.IndexAll</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>search_key</servlet-name>
-		<servlet-class>per.search.json.web.SearchKey</servlet-class>
-	</servlet>
-
-
+	 
 	<servlet-mapping>
-		<servlet-name>controller</servlet-name>
-		<url-pattern>/json/controller</url-pattern>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>synchronize</servlet-name>
-		<url-pattern>/json/synchronize</url-pattern>
-	</servlet-mapping>
-    <servlet-mapping>
-		<servlet-name>synchronize_history</servlet-name>
-		<url-pattern>/json/synchronize_history</url-pattern>
-	</servlet-mapping>
-    <servlet-mapping>
-		<servlet-name>synchronize_status</servlet-name>
-		<url-pattern>/json/synchronize_status</url-pattern>
-	</servlet-mapping>
-    <servlet-mapping>
-		<servlet-name>synchronize_stop_ongoing</servlet-name>
-		<url-pattern>/json/synchronize_stop_ongoing</url-pattern>
-	</servlet-mapping>
-    <servlet-mapping>
-		<servlet-name>products_all</servlet-name>
-		<url-pattern>/json/products_all</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>index_all</servlet-name>
-		<url-pattern>/json/index_all</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>search_key</servlet-name>
-		<url-pattern>/json/search_key</url-pattern>
-	</servlet-mapping>
+	 
+	
 	
 </web-app>

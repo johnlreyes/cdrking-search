@@ -14,7 +14,9 @@
 	<name>${project.artifactId}</name>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
 		<org.jdom.version>1.1</org.jdom.version>
 		<com.google.collections.version>1.0</com.google.collections.version>
@@ -53,6 +55,52 @@
 	
 	<dependencies>
 		
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+ 
+		<!--  Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				 </exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+	      	<groupId>org.slf4j</groupId>
+	      	<artifactId>jcl-over-slf4j</artifactId>
+	      	<version>1.5.8</version>
+	      	<scope>runtime</scope>
+	   	</dependency>
+	   	<dependency>
+	      	<groupId>org.slf4j</groupId>
+	      	<artifactId>slf4j-api</artifactId>
+	      	<version>1.5.6</version>
+	      	<scope>runtime</scope>
+	  	</dependency>
+	   	<dependency>
+	      	<groupId>org.slf4j</groupId>
+	      	<artifactId>slf4j-log4j12</artifactId>
+	      	<version>1.5.6</version>
+	      	<scope>runtime</scope>
+	   	</dependency>
+	   	
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -64,11 +112,13 @@
 			<artifactId>jdom</artifactId>
 			<version>${org.jdom.version}</version>
 		</dependency>
+		 
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+		 
 		<dependency>
 			<groupId>com.google.collections</groupId>
 			<artifactId>google-collections</artifactId>
@@ -128,12 +178,7 @@
 			<version>${javax.servlet.version}</version>
 		</dependency>
 		 
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20090211</version>
-		</dependency>
-
+		
         <dependency>
             <groupId>net.sourceforge.htmlcleaner</groupId>
             <artifactId>htmlcleaner</artifactId>
@@ -150,18 +195,8 @@
     		<artifactId>lucene-misc</artifactId>
     		<version>3.3.0</version>
 		</dependency>
-		<!-- 
-		<dependency>
-      		<groupId>org.apache.lucene</groupId>
-      		<artifactId>lucene-core</artifactId>
-      		<version>2.4.1</version>
-    	</dependency>
-    	<dependency>
-      		<groupId>lucene</groupId>
-      		<artifactId>lucene</artifactId>
-      		<version>1.4.3</version>
-    	</dependency>
-    	-->
+		
 	</dependencies>
+	
 	
 </project>

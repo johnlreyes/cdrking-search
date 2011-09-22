@@ -17,20 +17,26 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import per.search.model.Product;
 import per.search.persistence.ProductsDAO;
 
+@Component
 public class SearchProductSimple implements SearchProduct {
+
+	@Autowired
+	private ProductsDAO productsDAO;
 
 	@Override
 	public List<Product> search(String input) {
 		List<Product> productHits = new ArrayList<Product>();
-		if (input != null && input.trim().length()>0) {
+		if (input != null && input.trim().length() > 0) {
 			String[] arr = input.split("\\s+");
 			StringBuilder targetKey = new StringBuilder();
 			for (String a : arr) {
-				targetKey.append(a+"* ");
+				targetKey.append(a + "* ");
 			}
 			try {
 				Directory indexDir = FSDirectory.open(new File("lucene_index"));
@@ -48,8 +54,7 @@ public class SearchProductSimple implements SearchProduct {
 				for (ScoreDoc scoreDoc : hits.scoreDocs) {
 					Document d = searcher.doc(scoreDoc.doc);
 					String sid = d.get("sid");
-					String data = ProductsDAO.get(sid);
-					Product product = ProductsDAO.parseProduct(data);
+					Product product = productsDAO.get(sid);
 					productHits.add(product);
 					System.out.println(product.getSid() + " : " + product.getName() + " : " + product.getCode() + " : " + product.getPrice() + " : "
 							+ product.getStatus());

@@ -1,4 +1,4 @@
-package per.search;
+package per.search.source.http;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,7 +14,6 @@ import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.DomSerializer;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
-import org.json.JSONObject;
 import org.w3c.dom.Document;
 
 import per.search.model.Product;
@@ -26,18 +25,15 @@ public class Scrapper {
 
 	public static String toString(int sid) {
 		String url = BASE_URL + sid;
-
 		String returnValue = null;
 		String content = getContent(url);
 		if (content != null) {
 			Product product = parse(content, sid);
 			log.info("product=" + product);
 			if (product != null) {
-				JSONObject jsonObject = new JSONObject(product);
-				returnValue = jsonObject.toString();
+				returnValue = product.toJSON();
 			}
 		}
-
 		return returnValue;
 	}
 
@@ -67,13 +63,13 @@ public class Scrapper {
 
 			StringBuilder category = new StringBuilder();
 			int categoryIndex = 1;
-			String xpath_category = "//table[@id='table29']/tbody/tr[2]/td[2]/table/tbody/tr/td/font["+categoryIndex+"]/text()";
+			String xpath_category = "//table[@id='table29']/tbody/tr[2]/td[2]/table/tbody/tr/td/font[" + categoryIndex + "]/text()";
 			String value_category = xpath.evaluate(xpath_category, document);
-			log.info("value_category["+categoryIndex+"]=" + value_category);
-			while (value_category != null && value_category.trim().length()>0) {
+			log.info("value_category[" + categoryIndex + "]=" + value_category);
+			while (value_category != null && value_category.trim().length() > 0) {
 				category.append(value_category.replaceAll(">", "").trim()).append(" > ");
 				categoryIndex++;
-				xpath_category = "//table[@id='table29']/tbody/tr[2]/td[2]/table/tbody/tr/td/font["+categoryIndex+"]/text()";
+				xpath_category = "//table[@id='table29']/tbody/tr[2]/td[2]/table/tbody/tr/td/font[" + categoryIndex + "]/text()";
 				value_category = xpath.evaluate(xpath_category, document);
 			}
 
@@ -91,20 +87,36 @@ public class Scrapper {
 		return returnValue;
 	}
 
-	private static String getContent(String url) {
-		log.info("getting " + url);
+	private static String getContent(String targetUrl) {
+		log.info("getting " + targetUrl);
 		long startTime = System.currentTimeMillis();
 		String returnValue = null;
+		BufferedReader in = null;
+		InputStreamReader reader = null;
 		StringBuilder content = new StringBuilder();
 		try {
-			URL cdrking = new URL(url);
-			URLConnection yc = cdrking.openConnection();
-			BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+			URL url = new URL(targetUrl);
+			URLConnection urlConnection = url.openConnection();
+			reader = new InputStreamReader(urlConnection.getInputStream());
+			in = new BufferedReader(reader);
 			String inputLine;
-			while ((inputLine = in.readLine()) != null)
+			while ((inputLine = in.readLine()) != null) {
 				content.append(inputLine);
-			in.close();
+			}
 		} catch (Exception ex) {
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (Exception dontCare) {
+				}
+			}
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception dontCare) {
+				}
+			}
 		}
 		if (content.length() > 0) {
 			returnValue = content.toString();

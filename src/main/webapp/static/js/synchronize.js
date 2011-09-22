@@ -7,7 +7,7 @@ var SYNCHRONIZE = {
     ajax_synchronize: function() {
         $.ajax({
             type: "GET",
-            url: "/json/synchronize",
+            url: "/synchronize/external",
             error: function() {
                 $('#status').text('Synchronize failed. Try again.').slideDown('slow');
             },
@@ -23,7 +23,7 @@ var SYNCHRONIZE = {
     },
     ajax_history: function() {
         $.getJSON(
-            "/json/synchronize_history",
+            "/synchronize/history",
             function(data) {
                 $("#history_table_body").children().remove();
                 $.each(data, function(index, array) {
@@ -58,7 +58,7 @@ var SYNCHRONIZE = {
     },
     ajax_stop_ongoing: function() {
         $.getJSON(
-            "/json/synchronize_stop_ongoing",
+            "/synchronize/stop",
             function(data) {
             }
         );

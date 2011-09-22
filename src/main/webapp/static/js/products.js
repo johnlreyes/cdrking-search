@@ -39,7 +39,7 @@ var PRODUCTS = {
     ajax_get_updated_list: function(requestArray) {  
     	var returnValue = null;  
     	$.getJSON(
-            "/json/controller?action=product_list",
+            "product/list",
             requestArray
         )
         .success(
@@ -52,7 +52,7 @@ var PRODUCTS = {
     
     ajax_get_all: function() {    
         $.getJSON(
-            "/json/products_all",
+            "/product/all",
             function(data) {
                 $("#products_table_body").children().remove();
                 $.each(data, function(index, array) {
@@ -96,6 +96,6 @@ var PRODUCTS = {
 $(document).ready(function(){
     PRODUCTS.load();
     $('#display_all').click(function(){
-        PRODUCTS.display_all_product();
+        PRODUCTS.ajax_get_all();
     });
 });

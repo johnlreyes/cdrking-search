@@ -12,13 +12,20 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import per.search.model.Product;
 import per.search.persistence.ProductsDAO;
 
 @Log4j
+@Component
 public class IndexThread  implements Runnable {
 
+	@Autowired
+	private ProductsDAO productsDAO;
+	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		IndexWriter w = null;
@@ -34,12 +41,11 @@ public class IndexThread  implements Runnable {
 				
 		        int count = 0;
 		        int id = 14;
-		        String data = ProductsDAO.get(""+id);
+		        Product product = productsDAO.get(""+id);
 		        
-		        while (data != null || (data==null&&count < 10)) {
-		        	if (data != null) {
-		        		Product product = ProductsDAO.parseProduct(data);
-			            Document doc = new Document();
+		        while (product != null || (product==null&&count < 10)) {
+		        	if (product != null) {
+		        		Document doc = new Document();
 			            
 			            String name = product.getName();
 			            String code = product.getCode();
@@ -68,7 +74,7 @@ public class IndexThread  implements Runnable {
 		        	    count++;
 		            }
 		        	id++;
-		        	data = ProductsDAO.get(""+id);
+		        	product = productsDAO.get(""+id);
 		        }
 		    } catch (Exception ex) {
 				ex.printStackTrace();
