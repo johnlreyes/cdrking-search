@@ -11,5 +11,5 @@ public class Product {
 	private String category;
 	private String price;
 	private String status;
-	
+	private long updated;
 }

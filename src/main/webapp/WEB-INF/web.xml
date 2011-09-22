@@ -1,6 +1,11 @@
 <web-app>
 
 	<servlet>
+		<servlet-name>controller</servlet-name>
+		<servlet-class>per.search.json.web.Controller</servlet-class>
+	</servlet>
+	
+	<servlet>
 		<servlet-name>synchronize</servlet-name>
 		<servlet-class>per.search.json.web.Synchronize</servlet-class>
 	</servlet>
@@ -29,6 +34,11 @@
 		<servlet-class>per.search.json.web.SearchKey</servlet-class>
 	</servlet>
 
+
+	<servlet-mapping>
+		<servlet-name>controller</servlet-name>
+		<url-pattern>/json/controller</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>synchronize</servlet-name>
 		<url-pattern>/json/synchronize</url-pattern>
