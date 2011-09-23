@@ -15,12 +15,15 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<main.class>per.search.server.JettyMain</main.class>
+		
 		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
 		<org.jdom.version>1.1</org.jdom.version>
 		<com.google.collections.version>1.0</com.google.collections.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
+		<org.eclipse.jetty.version>8.0.0.M3</org.eclipse.jetty.version>
 	</properties>
 	
 	<build>
@@ -50,6 +53,40 @@
 					</connectors>
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>assemble</goal></goals>
+                        <configuration>
+                            <assembleDirectory>target</assembleDirectory>
+                            <generateRepository>false</generateRepository>
+                            <programs>
+                                <program>
+                                    <mainClass>${main.class}</mainClass>
+                                    <name>webapp</name>
+                                </program>
+                            </programs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>${main.class}</mainClass>
+                    </manifest>
+                </archive>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+        </plugin>
 		</plugins>
 	</build>
 	
@@ -196,7 +233,21 @@
     		<version>3.3.0</version>
 		</dependency>
 		
+		<dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${org.eclipse.jetty.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-xml</artifactId>
+		    <version>${org.eclipse.jetty.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-webapp</artifactId>
+		    <version>${org.eclipse.jetty.version}</version>
+		</dependency>
 	</dependencies>
-	
 	
 </project>
