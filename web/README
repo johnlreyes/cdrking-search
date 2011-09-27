@@ -13,3 +13,6 @@ heroku testing:
 	1.	mvn install
 	2.  // commit git
 	3.  git push heroku master
+	4.  heroku ps
+	5.  heroku logs
+	6.  visit heroku web
