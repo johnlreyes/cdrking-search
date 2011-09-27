@@ -24,6 +24,7 @@
 		<com.google.collections.version>1.0</com.google.collections.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<org.eclipse.jetty.version>8.0.0.M3</org.eclipse.jetty.version>
+		<voldemort.version>0.81</voldemort.version>
 	</properties>
 	
 	<build>
@@ -194,15 +195,16 @@
 		</dependency>
 		 
 		<dependency>
-            <groupId>uploaded</groupId>
-            <artifactId>voldemort</artifactId>
-            <version>internal</version>
-        </dependency>
+			<groupId>voldemort</groupId>
+			<artifactId>voldemort-contrib</artifactId>
+			<version>${voldemort.version}</version>
+		</dependency>
 		<dependency>
-            <groupId>uploaded</groupId>
-            <artifactId>voldemort-contrib</artifactId>
-            <version>internal</version>
-        </dependency>
+			<groupId>voldemort</groupId>
+			<artifactId>voldemort</artifactId>
+			<version>${voldemort.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
@@ -249,5 +251,12 @@
 		    <version>${org.eclipse.jetty.version}</version>
 		</dependency>
 	</dependencies>
+	
+	<repositories>
+		<repository>
+		  	<id>clojars.org</id>
+		  	<url>http://clojars.org/repo</url>
+		</repository>
+	</repositories>
 	
 </project>
