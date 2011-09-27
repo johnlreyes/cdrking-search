@@ -10,7 +10,7 @@
 			    	<Item>
 			      		<New class="org.eclipse.jetty.webapp.WebAppContext">
 					        <Set name="contextPath">/</Set>		
-					        <Set name="war">target/search-WAR-0.1-SNAPSHOT.war</Set>					
+					        <Set name="war">target/search-WAR-0.1-SNAPSHOT.jar</Set>					
 			      		</New>
 			    	</Item>			    
 			  	</Array>

@@ -1,4 +1,8 @@
 <web-app>
+
+	<welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 	
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

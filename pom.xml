@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>search</groupId>
 	<artifactId>search-WAR</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
 
@@ -33,21 +33,23 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>1.1.1</version>
+                <configuration>
+                    <assembleDirectory>target</assembleDirectory> 
+                    <generateRepository>false</generateRepository>
+                    <programs>
+                        <program>
+                            <mainClass>Main</mainClass>
+                            <name>webapp</name>
+                        </program>
+                    </programs>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>assemble</goal></goals>
-                        <configuration>
-                            <assembleDirectory>target</assembleDirectory>
-                            <generateRepository>false</generateRepository>
-                            <programs>
-                                <program>
-                                    <mainClass>${main.class}</mainClass>
-                                    <name>webapp</name>
-                                </program>
-                            </programs>
-                        </configuration>
-                    </execution>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>				
                 </executions>
             </plugin>
             <plugin>
@@ -58,6 +60,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<!--  
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -88,14 +91,7 @@
 					</connectors>
 				</configuration>
 			</plugin>
-			
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-                <!-- <configuration> <webXml>target/web.xml</webXml> </configuration> -->
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2.1</version>
@@ -105,7 +101,7 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
-            <!--  
+              
             <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
