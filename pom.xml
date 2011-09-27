@@ -15,7 +15,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<main.class>Main</main.class>
+		<main.class>per.search.server.JettyMain</main.class>
 		
 		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
 		<org.slf4j.version>1.6.1</org.slf4j.version>
@@ -38,7 +38,7 @@
                     <generateRepository>false</generateRepository>
                     <programs>
                         <program>
-                            <mainClass>Main</mainClass>
+                            <mainClass>${main.class}</mainClass>
                             <name>webapp</name>
                         </program>
                     </programs>
@@ -263,23 +263,25 @@
     		<version>3.3.0</version>
 		</dependency>
 		
-		<!--  
+		
 		<dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>${org.eclipse.jetty.version}</version>
         </dependency>
+        <!--  
         <dependency>
 		    <groupId>org.eclipse.jetty</groupId>
 		    <artifactId>jetty-xml</artifactId>
 		    <version>${org.eclipse.jetty.version}</version>
 		</dependency>
+		-->
 		<dependency>
 		    <groupId>org.eclipse.jetty</groupId>
 		    <artifactId>jetty-webapp</artifactId>
 		    <version>${org.eclipse.jetty.version}</version>
 		</dependency>
-		-->
+		<!--  
 		<dependency>
 		    <groupId>org.eclipse.jetty</groupId>
 		    <artifactId>jetty-webapp</artifactId>
@@ -290,7 +292,7 @@
 		    <artifactId>jsp-2.1-glassfish</artifactId>
 		    <version>2.1.v20100127</version>
 		</dependency>
-		
+		-->
 	</dependencies>
 	
 	<repositories>
