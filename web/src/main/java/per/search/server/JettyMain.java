@@ -17,7 +17,7 @@ public class JettyMain {
 //		if (webPort == null || webPort.isEmpty()) {
 //			webPort = "8080";
 //		}
-		String webPort = "80";
+		String webPort = "8080";
 		
 		Server server = new Server(Integer.valueOf(webPort));
 		WebAppContext root = new WebAppContext();
