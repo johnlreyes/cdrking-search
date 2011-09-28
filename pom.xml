@@ -9,16 +9,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>per.search</groupId>
-	<artifactId>search-POM</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>cdrking-search-JAR</artifactId>
+	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.projectlombok.version>0.10.0-RC3</org.projectlombok.version>
-		<org.codehaus.jackson.version>1.7.1</org.codehaus.jackson.version>		
-		<log4j.version>1.2.16</log4j.version>
+		<main.class>per.search.server.JettyMain</main.class>
+		
+		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+		<org.slf4j.version>1.6.1</org.slf4j.version>
+		
+		<org.jdom.version>1.1</org.jdom.version>
+		<com.google.collections.version>1.0</com.google.collections.version>
+		<javax.servlet.version>2.5</javax.servlet.version>
+		<org.eclipse.jetty.version>8.0.0.M3</org.eclipse.jetty.version>	
 	</properties>
 	
 	<build>
@@ -34,31 +40,157 @@
 		</plugins>
 	</build>
 	
-	<modules>
-		<module>persistence</module>
-		<module>web</module>
-	</modules>
-	
 	<dependencies>
 		
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${org.projectlombok.version}</version>
+			<groupId>per.search</groupId>
+			<artifactId>persistence-api-JAR</artifactId>
+			<version>0.1-SNAPSHOT</version>
 		</dependency>
-	
-		<!-- Jackson JSON Mapper -->
+		
+		<!--  Spring -->
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${org.codehaus.jackson.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				 </exclusion>
+			</exclusions>
 		</dependency>
- 
- 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
 		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+	      	<groupId>org.slf4j</groupId>
+	      	<artifactId>jcl-over-slf4j</artifactId>
+	      	<version>1.5.8</version>
+	      	<scope>runtime</scope>
+	   	</dependency>
+	   	<dependency>
+	      	<groupId>org.slf4j</groupId>
+	      	<artifactId>slf4j-api</artifactId>
+	      	<version>1.5.6</version>
+	      	<scope>runtime</scope>
+	  	</dependency>
+	   	<dependency>
+	      	<groupId>org.slf4j</groupId>
+	      	<artifactId>slf4j-log4j12</artifactId>
+	      	<version>1.5.6</version>
+	      	<scope>runtime</scope>
+	   	</dependency>
+	   	
+		
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>${org.jdom.version}</version>
+		</dependency>
+		 
+		<dependency>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
+			<version>${com.google.collections.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.3</version>
+		</dependency>
+		 
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+		</dependency>
+		 
+		
+        <dependency>
+            <groupId>net.sourceforge.htmlcleaner</groupId>
+            <artifactId>htmlcleaner</artifactId>
+            <version>2.2</version>
+        </dependency>
+        
+        <dependency>
+    		<groupId>org.apache.lucene</groupId>
+    		<artifactId>lucene-core</artifactId>
+    		<version>3.3.0</version>
+		</dependency>
+        <dependency>
+    		<groupId>org.apache.lucene</groupId>
+    		<artifactId>lucene-misc</artifactId>
+    		<version>3.3.0</version>
+		</dependency>
+		
+		 <!--  
+		<dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${org.eclipse.jetty.version}</version>
+        </dependency>
+       
+        <dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-xml</artifactId>
+		    <version>${org.eclipse.jetty.version}</version>
+		</dependency>
+		 
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-webapp</artifactId>
+		    <version>${org.eclipse.jetty.version}</version>
+		</dependency>
+		-->
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-webapp</artifactId>
+		    <version>7.4.4.v20110707</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.mortbay.jetty</groupId>
+		    <artifactId>jsp-2.1-glassfish</artifactId>
+		    <version>2.1.v20100127</version>
+		</dependency>
+		
 		 
 	</dependencies>
 	
@@ -67,6 +199,108 @@
 		  	<id>clojars.org</id>
 		  	<url>http://clojars.org/repo</url>
 		</repository>
+		<repository>
+			<id>johnlreyes</id>
+			<url>https://github.com/johnlreyes/cdrking-search-persistence/tree/master/repository/maven-repository</url>
+		</repository>
 	</repositories>
+	
+	<profiles>
+		<profile>
+			<id>persistence-file</id>
+			<dependencies>
+				<dependency>
+					<groupId>per.search</groupId>
+					<artifactId>persistence-file-JAR</artifactId>
+					<version>0.1-SNAPSHOT</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>persistence-voldemort</id>
+			<dependencies>
+				<dependency>
+					<groupId>per.search</groupId>
+					<artifactId>persistence-voldemort-JAR</artifactId>
+					<version>0.1-SNAPSHOT</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>heroku</id>
+			<activation><activeByDefault>true</activeByDefault></activation>			
+			<build>
+				<plugins>
+					<plugin>
+		                <groupId>org.codehaus.mojo</groupId>
+		                <artifactId>appassembler-maven-plugin</artifactId>
+		                <version>1.1.1</version>
+		                <configuration>
+		                    <assembleDirectory>target</assembleDirectory> 
+		                    <generateRepository>false</generateRepository>
+		                    <programs>
+		                        <program>
+		                            <mainClass>${main.class}</mainClass>
+		                            <name>webapp</name>
+		                        </program>
+		                    </programs>
+		                </configuration>
+		                <executions>
+		                    <execution>
+		                        <phase>package</phase>
+		                        <goals>
+		                            <goal>assemble</goal>
+		                        </goals>
+		                    </execution>				
+		                </executions>
+		            </plugin>
+				</plugins>
+			</build>			
+			<dependencies>
+				<dependency>
+					<groupId>per.search</groupId>
+					<artifactId>persistence-voldemort-JAR</artifactId>
+					<version>0.1-SNAPSHOT</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>local</id>
+			<build>
+				<plugins>			
+					<plugin>
+						<groupId>org.mortbay.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>7.4.4.v20110707</version>
+						<configuration>
+							<scanIntervalSeconds>10</scanIntervalSeconds>
+							<webAppConfig>
+								<contextPath>/</contextPath>
+							</webAppConfig>
+							<connectors>
+								<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+									<port>8080</port>
+									<maxIdleTime>60000</maxIdleTime>
+								</connector>
+							</connectors>
+						</configuration>
+					</plugin>
+					<plugin>
+		            <artifactId>maven-assembly-plugin</artifactId>
+		            <configuration>
+		                <archive>
+		                    <manifest>
+		                        <mainClass>${main.class}</mainClass>
+		                    </manifest>
+		                </archive>
+		                <descriptorRefs>
+		                    <descriptorRef>jar-with-dependencies</descriptorRef>
+		                </descriptorRefs>
+		            </configuration>
+		        </plugin>
+		        </plugins>
+			</build>
+		</profile>
+	</profiles>
 	
 </project>
