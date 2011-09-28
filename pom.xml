@@ -202,6 +202,7 @@
 		<repository>
 			<id>johnlreyes</id>
 			<url>https://github.com/johnlreyes/cdrking-search-persistence/tree/master/repository/maven-repository</url>
+			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
 	</repositories>
 	
