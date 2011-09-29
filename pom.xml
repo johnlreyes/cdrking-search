@@ -66,6 +66,7 @@
 	
 	<dependencies>
 		
+		<!--  
 		<dependency>
 			<groupId>per.search</groupId>
 			<artifactId>persistence-api-JAR</artifactId>
@@ -80,6 +81,7 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/persistence-file-JAR-0.1.jar</systemPath>
 		</dependency>
+		-->
 		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
