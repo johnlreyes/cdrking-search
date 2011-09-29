@@ -208,26 +208,6 @@
 	
 	<profiles>
 		<profile>
-			<id>persistence-file</id>
-			<dependencies>
-				<dependency>
-					<groupId>per.search</groupId>
-					<artifactId>persistence-file-JAR</artifactId>
-					<version>0.1</version>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
-			<id>persistence-voldemort</id>
-			<dependencies>
-				<dependency>
-					<groupId>per.search</groupId>
-					<artifactId>persistence-voldemort-JAR</artifactId>
-					<version>0.1</version>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
 			<id>heroku</id>
 			<activation><activeByDefault>true</activeByDefault></activation>			
 			<build>
@@ -260,11 +240,34 @@
 			<dependencies>
 				<dependency>
 					<groupId>per.search</groupId>
+					<artifactId>persistence-file-JAR</artifactId>
+					<version>0.1</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>persistence-file</id>
+			<dependencies>
+				<dependency>
+					<groupId>per.search</groupId>
+					<artifactId>persistence-file-JAR</artifactId>
+					<version>0.1</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>persistence-voldemort</id>
+			<dependencies>
+				<dependency>
+					<groupId>per.search</groupId>
 					<artifactId>persistence-voldemort-JAR</artifactId>
 					<version>0.1</version>
 				</dependency>
 			</dependencies>
 		</profile>
+		
 		<profile>
 			<id>local</id>
 			<build>
