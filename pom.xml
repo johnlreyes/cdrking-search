@@ -24,6 +24,10 @@
 		<com.google.collections.version>1.0</com.google.collections.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<org.eclipse.jetty.version>8.0.0.M3</org.eclipse.jetty.version>	
+		
+		<org.projectlombok.version>0.10.0-RC3</org.projectlombok.version>
+		<org.codehaus.jackson.version>1.7.1</org.codehaus.jackson.version>		
+		<log4j.version>1.2.16</log4j.version>
 	</properties>
 	
 	<build>
@@ -66,12 +70,36 @@
 			<groupId>per.search</groupId>
 			<artifactId>persistence-api-JAR</artifactId>
 			<version>0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/persistence-api-JAR-0.1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>per.search</groupId>
 			<artifactId>persistence-file-JAR</artifactId>
 			<version>0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/persistence-file-JAR-0.1.jar</systemPath>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${org.projectlombok.version}</version>
+		</dependency>
+	
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${org.codehaus.jackson.version}</version>
+		</dependency>
+ 
+ 		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		
 		
 		<!--  Spring -->
 		<dependency>
