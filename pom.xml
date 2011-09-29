@@ -253,10 +253,12 @@
 		  	<id>clojars.org</id>
 		  	<url>http://clojars.org/repo</url>
 		</repository>
+		<!--  
 		<repository>
 			<id>johnlreyes</id>
 			<url>https://raw.github.com/johnlreyes/cdrking-search-persistence/master/repository/maven-repository/</url>
 		</repository>
+		-->
 	</repositories>
 	
 	<!--  
