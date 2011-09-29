@@ -10,7 +10,7 @@
 	
 	<groupId>per.search</groupId>
 	<artifactId>cdrking-search-JAR</artifactId>
-	<version>0.1</version>
+	<version>0.0.1</version>
 	<name>${project.artifactId}</name>
 	<packaging>jar</packaging>
 
