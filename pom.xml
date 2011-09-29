@@ -11,7 +11,7 @@
 	<groupId>per.search</groupId>
 	<artifactId>cdrking-search-JAR</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>${project.artifactId}</name>
 
 	<properties>
@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>per.search</groupId>
 			<artifactId>persistence-api-JAR</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<version>0.1</version>
 		</dependency>
 		
 		<!--  Spring -->
@@ -201,8 +201,8 @@
 		</repository>
 		<repository>
 			<id>johnlreyes</id>
-			<url>https://github.com/johnlreyes/cdrking-search-persistence/tree/master/repository/maven-repository</url>
-			<snapshots><enabled>true</enabled></snapshots>
+			<url>https://raw.github.com/johnlreyes/cdrking-search-persistence/master/repository/maven-repository/</url>
+			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
 	</repositories>
 	
@@ -213,7 +213,7 @@
 				<dependency>
 					<groupId>per.search</groupId>
 					<artifactId>persistence-file-JAR</artifactId>
-					<version>0.1-SNAPSHOT</version>
+					<version>0.1</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -223,7 +223,7 @@
 				<dependency>
 					<groupId>per.search</groupId>
 					<artifactId>persistence-voldemort-JAR</artifactId>
-					<version>0.1-SNAPSHOT</version>
+					<version>0.1</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -261,7 +261,7 @@
 				<dependency>
 					<groupId>per.search</groupId>
 					<artifactId>persistence-voldemort-JAR</artifactId>
-					<version>0.1-SNAPSHOT</version>
+					<version>0.1</version>
 				</dependency>
 			</dependencies>
 		</profile>
